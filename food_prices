@@ -1,0 +1,33 @@
+import plotly.express as px 
+import pandas as pd 
+import plotly as plt
+import plotly.graph_objects as go
+import plotly.offline as pyo
+import datetime
+import numpy as np
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+from ydata_profiling import ProfileReport
+import streamlit as st
+
+food = pd.read_csv('food_prices_sen.csv')
+st.write(food)
+st.write(food.info())
+st.write(food.describe())
+st.write(food.isnull().sum())
+
+
+fig1 = px.line(food, x='date', y='price', title='Evolution des prix')
+st.plotly_chart(fig1)
+df = pd.DataFrame(food)
+fig2 = px.pie(df, values='price', names='commodity',
+             color='commodity', title='PERCENTAGE OF COMMODITIES ')
+st.plotly_chart(fig2)
+fig3 = px.histogram(food, x='market', nbins=15)
+st.plotly_chart(fig3)
+
+col1, col2 = st.columns(2)
+with col1:
+    col = st.plotly_chart(fig1)
+with col2: 
+    st.plotly_chart(fig2)
